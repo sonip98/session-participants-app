@@ -1,0 +1,57 @@
+name: Backend CI/CD
+
+# Trigger workflow on push or pull request to main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 3️⃣ Install dependencies
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: ./backend
+
+      # 4️⃣ Run tests
+      - name: Run tests
+        run: npm run test
+        working-directory: ./backend
+
+      # 5️⃣ Upload coverage artifact
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: ./backend/coverage
+
+      # 6️⃣ Setup SSH agent with private key
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      # 7️⃣ Deploy backend to server (only if tests pass)
+      - name: Deploy to server
+        if: success()
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "
+            cd /path/to/backend &&
+            git pull &&
+            npm install &&
+            pm2 restart backend
+          "
