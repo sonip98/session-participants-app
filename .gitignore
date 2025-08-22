@@ -1,0 +1,28 @@
+﻿# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+build/
+coverage/
+.tmp/
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Quasar & Vue
+.quasar/
+.sass-cache/
