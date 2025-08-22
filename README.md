@@ -1,8 +1,4 @@
-﻿Absolutely! Your project description is solid—it’s clear and detailed—but we can make it **more readable, structured, and professional**, highlighting features, setup, and API usage clearly. Here’s a polished version:
-
----
-
-# Session Participants App
+﻿# Session Participants App
 
 A **Vue.js + Quasar** frontend with **Node.js + Express + MongoDB** backend to create and manage sessions with participants: **Signer, Additional Signers, Witnesses, and Observers**.
 
